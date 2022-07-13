@@ -2,17 +2,37 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+    app.get('/', (req, res) => {
+    // res.send('Hello World!')
+    res.sendFile('./view/index.html', {root: __dirname});
+    })
 
-app.get('/about', (req, res) => {
-    res.send('This is about Page!')
-  })
+    app.get('/about', (req, res) => {
+        // res.send('This is about Page!')
+        res.sendFile('./view/about.html', {root: __dirname});
+    })
+  
+    app.get('/contact', (req, res) => {
+        // res.send('This is contact Page!')
+        res.sendFile('./view/contact.html', {root: __dirname});
+    })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+    //Membuat reques
+    app.get('/product/:id?', (req, res) => {
+        // res.send('Product Id: ' + req.params.id + '<br>'
+        // + 'Category Id : ' + req.params.idCat);
+        let category = req.query.category;
+        res.send(`Product Id : ${req.params.id} <br> Category Id : ${category}`);
+    })
+
+    app.use('/', (req,res)=>{
+        res.status(404)
+        res.send('Page Not found : 404')
+    })
+
+    app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+    })
 
 
 
